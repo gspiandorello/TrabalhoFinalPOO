@@ -3,6 +3,7 @@ package Helper;
 import Model.Cliente;
 import Model.Drone;
 import Model.Entrega;
+import Model.Localizacao;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -89,6 +90,28 @@ public final class Parser {
                 // Convert line into columns
                 ArrayList<String> columns = (ArrayList<String>) List.of(line.split(DELIMITER));
                 collection.add(Entrega.constructFromStrings(columns));
+
+            }
+        }
+        return collection;
+    }
+
+    public static ArrayList<Localizacao> readLocalizacoesData(String filename) throws FileNotFoundException, Exception {
+        ArrayList<Localizacao> collection = new ArrayList<>();
+
+        // Create a Buffered Reader
+        try (BufferedReader br = Files.newBufferedReader(Paths.get("data/"+filename))) {
+            // CSV file delimiter
+            String DELIMITER = ";";
+            // Read file line by line
+            String line;
+            // Skips the header
+            br.readLine();
+
+            while ((line = br.readLine()) != null) {
+                // Convert line into columns
+                ArrayList<String> columns = (ArrayList<String>) List.of(line.split(DELIMITER));
+                collection.add(Localizacao.constructFromStrings(columns));
 
             }
         }

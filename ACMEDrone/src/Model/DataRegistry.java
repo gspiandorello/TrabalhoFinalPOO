@@ -191,6 +191,12 @@ public class DataRegistry {
             }
         } else if (filename.contains("localizacoes")) {
             // READ LOCALIZACOES
+            try{
+                ArrayList<Localizacao> localizacaosRead = readLocalizacoesData(filename);
+                this.localizacaosList.addAll(localizacaosRead);
+            } catch (Exception err){
+                System.out.println("ABC");
+            }
         } else {
             throw new NoDataFile("Sem dados do sistema.");
         }
