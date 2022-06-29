@@ -1,6 +1,8 @@
 package Model;
 
 import java.util.ArrayList;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+
 
 class ClienteTest {
 
@@ -24,7 +26,7 @@ class ClienteTest {
 
         newClient.setEmail("exemplo@mail.com");
 
-        assert(newClient.getEmail()!=oldEmail);
+        assertNotEquals(newClient.getEmail(), oldEmail);
     }
 
     @org.junit.jupiter.api.Test
@@ -35,6 +37,6 @@ class ClienteTest {
 
         newClient.setSenha("pedrinho");
 
-        assert(newClient.getSenha()!=oldPassword);
+        assertNotEquals(newClient.getSenha(), oldPassword);
     }
 }
