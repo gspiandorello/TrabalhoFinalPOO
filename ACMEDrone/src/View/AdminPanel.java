@@ -6,11 +6,14 @@ import Helper.Parser;
 import Model.DataRegistry;
 
 import javax.xml.crypto.Data;
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.Scanner;
 
 public class AdminPanel {
 
     public AdminPanel(){
+        DataRegistry database = new DataRegistry();
         AdminController adminController = new AdminController();
         String menuOption;
 
@@ -60,7 +63,13 @@ public class AdminPanel {
                     adminController.getTodasEntregas();
                     break;
                 case "6":
-
+                    System.out.println("Digite o nome do arquivo com extensao: ");
+                    String nomeArquivo = input.nextLine();
+                    try{
+                        database.readDroneData(nomeArquivo);
+                    } catch (IOException e){
+                        System.out.println("Ocorreu um erro ao ler o arquivo.");
+                    }
                     break;
                     // Carregar a partir de .dat e mostrar na tela
                 case "7":
@@ -71,6 +80,5 @@ public class AdminPanel {
                     System.out.println("Opcao inválida! Redigite.");
             }
         }while(!menuOption.equals("7"));
-
     }
 }

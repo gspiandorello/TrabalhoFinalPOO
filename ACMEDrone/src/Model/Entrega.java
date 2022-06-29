@@ -78,7 +78,7 @@ public abstract class Entrega {
 		switch(tipo) {
 			case 1:
 				Date validade = sdf.parse(values.get(8));
-				return new EntregaPerecivel(num, desc, data, peso, email, null, null, validade);
+//				return new EntregaPerecivel(num, desc, data, peso, email, null, null, validade);
 			case 2:
 				String descricaoMaterial = values.get(8);
 				return new EntregaNaoPerecivel(num, desc, data, peso, email, null, null, descricaoMaterial);
