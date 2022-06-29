@@ -11,7 +11,7 @@ public abstract class Entrega {
 		return numero;
 	}
 
-	private int numero;
+	private int numero; //identificador unico
 
 	private String descricao;
 
@@ -19,7 +19,7 @@ public abstract class Entrega {
 
 	double peso;
 
-	private int situacao;
+	private int situacao; //cadastrada, entregada ou cancelada
 
 	Localizacao origem;
 

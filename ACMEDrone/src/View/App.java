@@ -21,6 +21,5 @@ public class App {
             new AdminPanel();
         else
             new UserPanel();
-
     }
 }

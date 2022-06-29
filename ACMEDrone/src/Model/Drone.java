@@ -63,5 +63,13 @@ public class Drone {
 		return new Drone(id, maxCarga, autonomia, null);
 	}
 
-
+	@Override
+	public String toString() {
+		return "Drone{" +
+				"identificador=" + identificador +
+				", cargaMaxima=" + cargaMaxima +
+				", autonomiaKm=" + autonomiaKm +
+				", base=" + base +
+				'}';
+	}
 }

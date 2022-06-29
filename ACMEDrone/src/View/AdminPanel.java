@@ -12,42 +12,42 @@ public class AdminPanel {
 
     public AdminPanel(){
         AdminController adminController = new AdminController();
-        int menuOption;
+        String menuOption;
 
 
         do{
             System.out.println(" ------------ PAINEL DE ADMINISTRADOR ------------ ");
 
-            System.out.println("Salvar e encerrar................................0");
+            System.out.println("Salvar dados cadastrados.........................0");
             System.out.println("Cadastrar nova localizacao.......................1");
             System.out.println("Cadastrar novo drone.............................2");
             System.out.println("Cadastrar novo cliente...........................3");
             System.out.println("Cadastrar nova entrega...........................4");
             System.out.println("Consultar todas entregas.........................5");
             System.out.println("Simular carga de dados...........................6");
+            System.out.println("Encerrar o programa..............................7");
 
             System.out.print("Insira uma opcao do menu: ");
 
-            // InputMismatch exception
             Scanner input = new Scanner(System.in);
-            menuOption = input.nextInt();
+            menuOption = input.nextLine();
 
             switch (menuOption){
-                case 0:
+                case "0":
                     // iniciar o salvamento se foi realizado algo
-                case 1:
+                case "1":
                     // Cadastra nova localização no banco de dados
                     adminController.criaLocalizacao();
                     break;
-                case 2:
+                case "2":
                     // Cadastrar novo drone
                     adminController.criaDrone();
                     break;
-                case 3:
+                case "3":
                     // Cadastrar novo cliente
                     adminController.criaCliente();
                     break;
-                case 4:
+                case "4":
                     // Cadastrar nova entrega
                     try{
                         adminController.criaEntrega();
@@ -55,14 +55,22 @@ public class AdminPanel {
                         System.out.println("Testa isso");
                     }
                     break;
-                case 5:
+                case "5":
                     // Consultar todas entregas
                     adminController.getTodasEntregas();
                     break;
-                case 6:
+                case "6":
+
+                    break;
                     // Carregar a partir de .dat e mostrar na tela
+                case "7":
+                    System.out.println("Programa encerrado.");
+                    break;
+                default:
+                    System.out.println();
+                    System.out.println("Opcao inválida! Redigite.");
             }
-        }while(menuOption <1 || menuOption > 5);
+        }while(!menuOption.equals("7"));
 
     }
 }

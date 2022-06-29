@@ -4,6 +4,7 @@ import Exceptions.DuplicateID;
 import Model.DataRegistry;
 import Model.Localizacao;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -36,7 +37,7 @@ public class AdminController {
         try{
             database.addLocalizacao(loc, endereco, lat, lon);
         } catch (DuplicateID e) {
-            System.err.println(e.getMessage());
+            System.out.println(e.getMessage());
             System.out.println("[INFO] Tente novamente!");
             criaLocalizacao();
         }
@@ -59,7 +60,7 @@ public class AdminController {
         try{
             database.addDrone(id, cargaMaxima, autonomiaKm, database.getLocalizacaoByID(id));
         } catch (DuplicateID e) {
-            System.err.println(e.getMessage());
+            System.out.println(e.getMessage());
             System.out.println("[INFO] Tente novamente!");
             criaDrone();
         }
@@ -76,13 +77,13 @@ public class AdminController {
         System.out.print("Insira a senha do cliente: ");
         String senha = input.nextLine();
 
-        System.out.print("Insira a localizacao do cliente: ");
+        System.out.print("Insira o codigo da localizacao do cliente: ");
         int base = Integer.parseInt(input.nextLine());
 
         try{
             database.addCliente(nome, email, senha, database.getLocalizacaoByID(base));
         } catch (DuplicateID e) {
-            System.err.println(e.getMessage());
+            System.out.println(e.getMessage());
             System.out.println("[INFO] Tente novamente!");
             criaCliente();
         }
@@ -96,15 +97,15 @@ public class AdminController {
         System.out.print("Insira uma breve descricao do item: ");
         String descricao = input.nextLine();
 
-        System.out.print("Insira o peso da entrega: ");
+        System.out.print("Insira o peso da entrega (em kg): ");
         double pesoEntrega = Double.parseDouble(input.nextLine());
 
-        int tipoEntrega;
+        String tipoEntrega;
         do{
             System.out.println("Insira o tipo de entrega: ");
             System.out.println("1. Perecivel\t2.Nao Perecivel");
-            tipoEntrega = Integer.parseInt(input.nextLine());
-        }while(tipoEntrega<1 || tipoEntrega>2);
+            tipoEntrega = input.nextLine();
+        }while(!tipoEntrega.equals("1") && !tipoEntrega.equals("2"));
 
         System.out.println(" --- Lista de Clientes disponíveis ---");
         database.printAllClients();
@@ -113,12 +114,13 @@ public class AdminController {
         String email = input.nextLine();
 
         System.out.println(" --- Lista de Drones disponíveis ---");
-        database.printAllAvailableDrones(email, pesoEntrega);
+//        database.printAllAvailableDrones(email, pesoEntrega);
+        database.printAllDrones();
 
         System.out.print("Insira o ID do drone desejado: ");
         int droneID = Integer.parseInt(input.nextLine());
 
-        if(tipoEntrega==1){
+        if(tipoEntrega.equals("1")){
             System.out.println("Insira a date de validade do alimento perecivel: ");
             String dateString = input.nextLine();
 
@@ -131,7 +133,7 @@ public class AdminController {
                         email, droneID, data);
                 System.out.println(" --- Entrega perecivel cadastrada ---");
             } catch (DuplicateID e) {
-                System.err.println(e.getMessage());
+                System.out.println(e.getMessage());
                 System.out.println("[INFO] Tente novamente!");
                 criaEntrega();
             }
@@ -144,7 +146,7 @@ public class AdminController {
                         email, droneID, material);
                 System.out.println(" --- Entrega nao perecivel cadastrada ---");
             } catch (DuplicateID e) {
-                System.err.println(e.getMessage());
+                System.out.println(e.getMessage());
                 System.out.println("[INFO] Tente novamente!");
                 criaEntrega();
             }
@@ -153,6 +155,25 @@ public class AdminController {
 
     public void getTodasEntregas(){
         database.queryAllEntregas();
+    }
+
+    public void simuladoDados() throws IOException {
+        System.out.println("Digite o nome do arquivo (com extensão): ");
+        System.out.println("Exemplo: \"TESTE-clientes.dat\"");
+        String nomeArquivo = input.nextLine();
+        if(nomeArquivo.contains("-clientes.dat")){
+            database.readClientsData(nomeArquivo);
+        }
+        else if(nomeArquivo.contains("-drones.dat")){
+            database.readDroneData(nomeArquivo);
+        }
+//        else if(nomeArquivo.contains("-entregas.dat")){
+//            database.readDeliveryData(nomeArquivo);
+//        }
+        else if(nomeArquivo.contains("-localizacoes.dat")){
+            database.readLocalizationsData(nomeArquivo);
+        }
+
     }
     
 }

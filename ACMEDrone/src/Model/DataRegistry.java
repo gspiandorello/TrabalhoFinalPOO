@@ -2,10 +2,18 @@ package Model;
 
 import Exceptions.DuplicateID;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Vector;
 
 public class DataRegistry {
     private ArrayList<Cliente> clientesList = new ArrayList<>();
@@ -97,6 +105,12 @@ public class DataRegistry {
         }
     }
 
+    public void printAllDrones(){
+        for(Drone d : dronesList){
+            System.out.println(d);
+        }
+    }
+
     public Localizacao getDroneLocByID(int ID){
         for (Drone d:
              this.dronesList) {
@@ -158,4 +172,98 @@ public class DataRegistry {
             }
         }
     }
+
+    public void readClientsData(String nomeArquivo) throws IOException {
+        Path path = Paths.get(nomeArquivo);
+        BufferedReader reader = Files.newBufferedReader(path, Charset.defaultCharset());
+        String line = null;
+        reader.readLine();
+        while((line = reader.readLine()) != null){
+            String[] temp = line.split(";");
+            String nome = temp[0];
+            String email = temp[1];
+            String senha = temp[2];
+            String codigoLocalizacao = temp[3];
+            try{
+                addCliente(nome, email, senha, getLocalizacaoByID(Integer.parseInt(codigoLocalizacao)));
+                System.out.println(getClienteByEmail(email));
+            } catch (DuplicateID e){
+                System.out.println("[ERRO] E-mail ja adicionado em colecao de dados para clientes.");
+            }
+        }
+    }
+
+    public void readDroneData(String nomeArquivo) throws IOException {
+        Path path = Paths.get(nomeArquivo);
+        BufferedReader reader = Files.newBufferedReader(path, Charset.defaultCharset());
+        String line = null;
+        reader.readLine();
+        while((line = reader.readLine()) != null){
+            String[] temp = line.split(";");
+            String identificador = temp[0];
+            String cargaMaxima = temp[1];
+            String autonomia = temp[2];
+            String codigoLocalizacao = temp[3];
+            try{
+                addDrone(Integer.parseInt(identificador), Double.parseDouble(cargaMaxima), Double.parseDouble(autonomia),
+                        getLocalizacaoByID(Integer.parseInt(codigoLocalizacao)));
+                System.out.println(getDroneLocByID(Integer.parseInt(identificador)));
+            } catch (DuplicateID e){
+                System.out.println("[ERRO] ID ja adicionado em colecao de dados para drones.");
+            }
+        }
+    }
+
+//    public void readDeliveryData(String nomeArquivo) throws IOException {
+//        Path path = Paths.get(nomeArquivo);
+//        BufferedReader reader = Files.newBufferedReader(path, Charset.defaultCharset());
+//        String line = null;
+//        reader.readLine();
+//        while((line = reader.readLine()) != null){
+//            //tipo;numero;descricao;data;peso;emailCliente;codigoLocalizacaoOrigem;codigoLocalizacaoDestino;validadeOuMaterial
+//            String[] temp = line.split(";");
+//            String tipo = temp[0];
+//            String numero = temp[1];
+//            String descricao = temp[2];
+//            String data = temp[3];
+//            String peso = temp[4];
+//            String emailCliente = temp[5];
+//            String codigoLocalizacaoOrigem = temp[6];
+//            String codigoLocalizacaoDestino = temp[7];
+//            String validadeOuMaterial = temp[8];
+//
+//            try{
+//                if(validadeOuMaterial.contains("/")){
+//                    addEntregaPerecivel(Integer.parseInt(numero), descricao, Double.parseDouble(peso), emailCliente, );
+//                }
+//                else{
+//                    addEntregaNaoPerecivel();
+//                }
+//                System.out.println(getEntrega(email));
+//            } catch (DuplicateID e){
+//                System.out.println("[ERRO] E-mail ja adicionado em colecao de dados para clientes.");
+//            }
+//        }
+//    }
+
+    public void readLocalizationsData(String nomeArquivo) throws IOException {
+        Path path = Paths.get(nomeArquivo);
+        BufferedReader reader = Files.newBufferedReader(path, Charset.defaultCharset());
+        String line = null;
+        reader.readLine();
+        while((line = reader.readLine()) != null){
+            String[] temp = line.split(";");
+            String codigo = temp[0];
+            String logradouro = temp[1];
+            String latitude = temp[2];
+            String longitude = temp[3];
+            try{
+                addLocalizacao(Integer.parseInt(codigo), logradouro, Double.parseDouble(latitude), Double.parseDouble(longitude));
+                System.out.println(getLocalizacaoByID(Integer.parseInt(codigo)));
+            } catch (DuplicateID e){
+                System.out.println("[ERRO] E-mail ja adicionado em colecao de dados para localizacao.");
+            }
+        }
+    }
+
 }
