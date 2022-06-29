@@ -69,14 +69,6 @@ public class Localizacao {
 		return value * Math.PI / 180;
 	}
 
-	public static Localizacao constructFromStrings(List<String> values) {
-		int codigo = Integer.parseInt(values.get(0));
-		String logradouro = values.get(1);
-		double lat  = Double.parseDouble(values.get(2));
-		double longt = Double.parseDouble(values.get(3));
-		return new Localizacao(codigo, logradouro, lat, longt);
-	}
-
 	@Override
 	public String toString() {
 		return "Localizacao [" +
