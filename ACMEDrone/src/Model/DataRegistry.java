@@ -120,8 +120,8 @@ public class DataRegistry {
         String dataHojeString = sdf.format(new Date());
         Date dataHoje = sdf.parse(dataHojeString);
 
-        int origem = getClienteByEmail(email).getLocalizacao().getCodigo();
-        int destino = getDroneLocByID(droneID).getCodigo();
+        Localizacao origem = getClienteByEmail(email).getLocalizacao();
+        Localizacao destino = getDroneLocByID(droneID);
 
         if(checkEntregaID(entregaID)){
             entregasList.add(new EntregaPerecivel(entregaID, descricao, dataHoje,
@@ -138,8 +138,8 @@ public class DataRegistry {
         String dataHojeString = sdf.format(new Date());
         Date dataHoje = sdf.parse(dataHojeString);
 
-        int origem = getClienteByEmail(email).getLocalizacao().getCodigo();
-        int destino = getDroneLocByID(droneID).getCodigo();
+        Localizacao origem = getClienteByEmail(email).getLocalizacao();
+        Localizacao destino = getDroneLocByID(droneID);
 
         if(checkEntregaID(entregaID)){
             entregasList.add(new EntregaNaoPerecivel(entregaID, descricao, dataHoje,

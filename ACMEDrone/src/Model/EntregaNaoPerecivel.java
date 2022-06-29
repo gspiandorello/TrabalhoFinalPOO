@@ -7,7 +7,7 @@ public class EntregaNaoPerecivel extends Entrega{
 
 
     public EntregaNaoPerecivel(int id, String descricao, Date data,
-                               double peso, String emailCliente, int origem, int destino, String material) {
+                               double peso, String emailCliente, Localizacao origem, Localizacao destino, String material) {
         super(id, descricao, data, peso, 0, origem, destino);
         this.material = material;
     }

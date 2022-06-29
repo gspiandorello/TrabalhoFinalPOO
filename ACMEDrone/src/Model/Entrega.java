@@ -21,9 +21,9 @@ public abstract class Entrega {
 
 	private int situacao;
 
-	int origem;
+	Localizacao origem;
 
-	int destino;
+	Localizacao destino;
 
 	private Cliente cliente;
 
@@ -34,7 +34,7 @@ public abstract class Entrega {
 	}
 
 	public Entrega(int numero, String descricao, Date data,
-				   double peso, int situacao,int origem, int destino){
+				   double peso, int situacao, Localizacao origem, Localizacao destino){
 		this.numero = numero;
 		this.descricao = descricao;
 		this.data = data;
@@ -45,7 +45,7 @@ public abstract class Entrega {
 	}
 
 	public Entrega(int numero, String descricao, Date data,
-				   double peso, int situacao,int origem, int destino, Cliente cliente, Drone drone){
+				   double peso, int situacao, Localizacao origem, Localizacao destino, Cliente cliente, Drone drone){
 		this.numero = numero;
 		this.descricao = descricao;
 		this.data = data;
@@ -68,16 +68,16 @@ public abstract class Entrega {
 
 		double peso = Double.parseDouble(values.get(4));
 		String email = values.get(5);
-		int origem = Integer.parseInt(values.get(6));
-		int destino =  Integer.parseInt(values.get(7));
+		//Localizacao origem = Integer.parseInt(values.get(6));
+		//Localizacao destino =  Integer.parseInt(values.get(7));
 
 		switch(tipo) {
 			case 1:
 				Date validade = sdf.parse(values.get(8));
-				return new EntregaPerecivel(num, desc, data, peso, email, origem, destino, validade);
+				return new EntregaPerecivel(num, desc, data, peso, email, null, null, validade);
 			case 2:
 				String descricaoMaterial = values.get(8);
-				return new EntregaNaoPerecivel(num, desc, data, peso, email, origem, destino, descricaoMaterial);
+				return new EntregaNaoPerecivel(num, desc, data, peso, email, null, null, descricaoMaterial);
 		}
 
 		return null;
