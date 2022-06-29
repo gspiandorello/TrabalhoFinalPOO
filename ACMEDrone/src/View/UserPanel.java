@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class UserPanel {
 
-    public UserPanel(){
+    public void UserPanel(){
         String menuOption;
         do{
             System.out.println(" --------------- BEM-VINDO USUARIO --------------- ");
@@ -12,7 +12,7 @@ public class UserPanel {
             System.out.println("Salvar e encerrar................................0");
             System.out.println("Consultar entregas...............................1");
             System.out.println("Consultar cobranca mensal........................2");
-            System.out.println("Encerrar o programa..............................3");
+            System.out.println("Voltar ao MENU INICIAL..............................3");
 
             System.out.print("Insira uma opcao do menu: ");
 
@@ -30,7 +30,8 @@ public class UserPanel {
                     break;
                     // cadastrar novo drone
                 case "3":
-                    System.out.println("Programa encerrado.");
+                    App app = new App();
+                    app.menuInicial();
                     break;
                 default:
                     System.out.println();

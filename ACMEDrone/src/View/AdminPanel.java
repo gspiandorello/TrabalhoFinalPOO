@@ -12,11 +12,11 @@ import java.util.Scanner;
 
 public class AdminPanel {
 
-    public AdminPanel(){
+    public void AdminPanel(){
         DataRegistry database = new DataRegistry();
         AdminController adminController = new AdminController();
+        App app = new App();
         String menuOption;
-
 
         do{
             System.out.println(" ------------ PAINEL DE ADMINISTRADOR ------------ ");
@@ -28,7 +28,7 @@ public class AdminPanel {
             System.out.println("Cadastrar nova entrega...........................4");
             System.out.println("Consultar todas entregas.........................5");
             System.out.println("Simular carga de dados...........................6");
-            System.out.println("Encerrar o programa..............................7");
+            System.out.println("Voltar ao MENU INICIAL..............................7");
 
             System.out.print("Insira uma opcao do menu: ");
 
@@ -73,7 +73,7 @@ public class AdminPanel {
                     break;
                     // Carregar a partir de .dat e mostrar na tela
                 case "7":
-                    System.out.println("Programa encerrado.");
+                    app.menuInicial();
                     break;
                 default:
                     System.out.println();

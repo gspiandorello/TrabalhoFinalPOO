@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Vector;
 
 public class DataRegistry {
-    private ArrayList<Cliente> clientesList = new ArrayList<>();
+    private static ArrayList<Cliente> clientesList = new ArrayList<>();
     private ArrayList<Drone> dronesList = new ArrayList<>();
     private ArrayList<Entrega> entregasList = new ArrayList<>();
     private ArrayList<Localizacao> localizacaosList = new ArrayList<>();
@@ -79,6 +79,14 @@ public class DataRegistry {
             if(c.getEmail().equals(email)) return false;
         }
         return true;
+    }
+
+    public static boolean verificaCredenciaisCliente(String email, String senha){
+        for(Cliente c : clientesList){
+            if(email.equals(c.getEmail()) && senha.equals(c.getSenha()))
+                return true;
+        }
+        return false;
     }
 
 
