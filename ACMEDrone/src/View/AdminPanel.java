@@ -1,11 +1,8 @@
 package View;
 
 import Controller.AdminController;
-import Exceptions.DuplicateID;
-import Helper.Parser;
 import Model.DataRegistry;
 
-import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Scanner;

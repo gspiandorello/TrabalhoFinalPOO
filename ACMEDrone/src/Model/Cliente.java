@@ -54,19 +54,6 @@ public class Cliente {
 	}
 
 
-	public boolean loginSuccessful(String mail, String password){
-		return mail.equals(this.email) && password.equals(this.senha);
-	}
-
-	public static Cliente constructFromStrings(List<String> values) {
-		String name = values.get(0);
-		String email = values.get(1);
-		String senha  = values.get(2);
-		// a partir do codigo da localizacao, retornar a localizacao (objeto)
-		//Localizacao loc = Database.getLocalizacaoByID(Integer.parseInt(values.get(3)));
-		return null;//new Cliente(name, email, senha,  loc);
-	}
-
 	@Override
 	public String toString() {
 		return "Cliente[ " +
