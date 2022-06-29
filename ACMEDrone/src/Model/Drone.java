@@ -51,6 +51,10 @@ public class Drone {
 		this.base = base;
 	}
 
+	public boolean isAvailable(Cliente cliente, double peso){
+		return false;
+	}
+
 	public static Drone constructFromStrings(List<String> values) {
 		int id = Integer.parseInt(values.get(0));
 		double maxCarga = Double.parseDouble(values.get(1));
@@ -58,4 +62,6 @@ public class Drone {
 		int baseEndereco = Integer.parseInt(values.get(3));
 		return new Drone(id, maxCarga, autonomia, null);
 	}
+
+
 }

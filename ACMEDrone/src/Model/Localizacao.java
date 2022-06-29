@@ -51,9 +51,22 @@ public class Localizacao {
 	}
 
 	public double getDistance(Localizacao target){
-		double x = Math.pow(this.getLatitude()- target.getLatitude(), 2);
-		double y = Math.pow(this.getLongitude()- target.getLongitude(), 2);
-		return Math.sqrt(x + y);
+		final int R = 6371;
+
+		double latDistance = toRad(target.getLatitude()-this.latitude);
+		double lonDistance = toRad(target.getLongitude()-this.longitude);
+
+		double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2) +
+				Math.cos(toRad(this.latitude)) * Math.cos(toRad(target.getLatitude())) *
+						Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+
+		double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+		return R*c;
+	}
+
+	private static Double toRad(Double value) {
+		return value * Math.PI / 180;
 	}
 
 	public static Localizacao constructFromStrings(List<String> values) {

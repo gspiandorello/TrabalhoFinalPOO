@@ -40,17 +40,21 @@ public class AdminPanel {
                     adminController.criaLocalizacao();
                     break;
                 case 2:
-                    // cadastrar novo drone
+                    // Cadastrar novo drone
                     adminController.criaDrone();
                     break;
                 case 3:
-                    // cadastrar novo cliente
+                    // Cadastrar novo cliente
+                    adminController.criaCliente();
+                    break;
                 case 4:
-                    // cadastrar nova entrega
+                    // Cadastrar nova entrega
+                    adminController.criaEntrega();
+                    break;
                 case 5:
-                    // consultar todas entregas
+                    // Consultar todas entregas
                 case 6:
-                    // carregar a partir de .dat e mostrar na tela
+                    // Carregar a partir de .dat e mostrar na tela
             }
         }while(menuOption <1 || menuOption > 5);
 

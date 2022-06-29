@@ -29,12 +29,6 @@ public class Cliente {
 		this.entregasDoCliente = entregasDoCliente;
 	}
 
-	public Cliente(String nome, String email, String senha){
-		this.nome = nome;
-		this.email = email;
-		this.senha = senha;
-	}
-
 	public String getEmail() {
 		return email;
 	}
@@ -50,6 +44,15 @@ public class Cliente {
 	public void setSenha(final String senha) {
 		this.senha = senha;
 	}
+
+	public Localizacao getLocalizacao() {
+		return endereco;
+	}
+
+	public void setEndereco(final Localizacao loc) {
+		this.endereco = loc;
+	}
+
 
 	public boolean loginSuccessful(String mail, String password){
 		return mail.equals(this.email) && password.equals(this.senha);

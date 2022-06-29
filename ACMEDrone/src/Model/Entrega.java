@@ -7,6 +7,10 @@ import java.util.List;
 
 public abstract class Entrega {
 
+	public int getNumero() {
+		return numero;
+	}
+
 	private int numero;
 
 	private String descricao;
