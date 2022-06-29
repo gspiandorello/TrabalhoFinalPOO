@@ -39,7 +39,7 @@ public class Drone {
 		return autonomiaKm;
 	}
 
-	public void setAutonomiaKm(int autonomiaKm) {
+	public void setAutonomiaKm(double autonomiaKm) {
 		this.autonomiaKm = autonomiaKm;
 	}
 
@@ -49,10 +49,6 @@ public class Drone {
 
 	public void setBase(Localizacao base) {
 		this.base = base;
-	}
-
-	public boolean isAvailable(Cliente cliente, double peso){
-		return false;
 	}
 
 	@Override
