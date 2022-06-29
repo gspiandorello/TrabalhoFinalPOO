@@ -15,7 +15,7 @@ public class DataRegistry {
     private ArrayList<Cliente> clientesList = new ArrayList<>();
     private ArrayList<Drone> dronesList = new ArrayList<>();
     private ArrayList<Entrega> entregasList = new ArrayList<>();
-    private ArrayList<Localizacao> localizacaosList = new ArrayList<>();
+    private static ArrayList<Localizacao> localizacaosList = new ArrayList<>();
 
     public void addLocalizacao(int loc, String endereco, double lat, double lon) throws DuplicateID {
         if(checkLocalizacaoID(loc))
@@ -54,6 +54,13 @@ public class DataRegistry {
             if(l.getCodigo()==loc) return false;
         }
         return true;
+    }
+
+    public static Localizacao getLocalizacao(int locID){
+        for(Localizacao l : localizacaosList){
+            if(l.getCodigo()==locID) return l;
+        }
+        return null;
     }
 
     private boolean checkDroneID(int id){

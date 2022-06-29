@@ -61,6 +61,7 @@ public class AdminPanel {
                     break;
                 case 6:
                     // Carregar a partir de .dat e mostrar na tela
+                    adminController.readFromDataFiles();
             }
         }while(menuOption <1 || menuOption > 5);
 

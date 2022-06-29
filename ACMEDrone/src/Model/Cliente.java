@@ -12,23 +12,12 @@ public class Cliente {
 
 	private Localizacao endereco;
 
-	private ArrayList<Entrega> entregasDoCliente = new ArrayList<>();
-
 	public Cliente(String nome, String email, String senha, Localizacao endereco){
 		this.nome = nome;
 		this.email = email;
 		this.senha = senha;
 		this.endereco = endereco;
 	}
-
-	public Cliente(String nome, String email, String senha, Localizacao endereco, ArrayList<Entrega> entregasDoCliente){
-		this.nome = nome;
-		this.email = email;
-		this.senha = senha;
-		this.endereco = endereco;
-		this.entregasDoCliente = entregasDoCliente;
-	}
-
 	public String getEmail() {
 		return email;
 	}
@@ -45,7 +34,7 @@ public class Cliente {
 		this.senha = senha;
 	}
 
-	public Localizacao getLocalizacao() {
+	public static Localizacao getLocalizacao() {
 		return endereco;
 	}
 
@@ -63,8 +52,10 @@ public class Cliente {
 		String email = values.get(1);
 		String senha  = values.get(2);
 		// a partir do codigo da localizacao, retornar a localizacao (objeto)
-		//Localizacao loc = Database.getLocalizacaoByID(Integer.parseInt(values.get(3)));
-		return null;//new Cliente(name, email, senha,  loc);
+		Localizacao localizacao = getLocalizacao(Integer.parseInt(values.get(3)));
+
+
+		return new Cliente(name, email, senha,  loc);
 	}
 
 	@Override

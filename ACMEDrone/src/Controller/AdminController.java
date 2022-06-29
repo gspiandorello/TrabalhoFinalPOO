@@ -1,6 +1,7 @@
 package Controller;
 
 import Exceptions.DuplicateID;
+import Exceptions.NoDataFile;
 import Model.DataRegistry;
 import Model.Localizacao;
 
@@ -153,6 +154,19 @@ public class AdminController {
 
     public void getTodasEntregas(){
         database.queryAllEntregas();
+    }
+
+    public void readFromDataFiles(){
+        System.out.println("--- Simulando carga de dados ---");
+        System.out.print("Insira o nome do arquivo: ");
+        String filename = input.nextLine();
+
+        try{
+            database.loadFromFile(filename);
+        } catch (NoDataFile dataError){
+            System.out.println(dataError.getMessage());
+        }
+
     }
     
 }
