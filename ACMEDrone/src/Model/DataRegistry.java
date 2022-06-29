@@ -53,6 +53,13 @@ public class DataRegistry {
         return null;
     }
 
+    public Entrega getEntregaByID(int id){
+        for(Entrega e : entregasList){
+            if(e.getNumero()==id) return e;
+        }
+        return null;
+    }
+
     private boolean checkLocalizacaoID(int loc){
         for(Localizacao l : localizacaosList){
             if(l.getCodigo()==loc) return false;
@@ -214,37 +221,50 @@ public class DataRegistry {
         }
     }
 
-//    public void readDeliveryData(String nomeArquivo) throws IOException {
-//        Path path = Paths.get(nomeArquivo);
-//        BufferedReader reader = Files.newBufferedReader(path, Charset.defaultCharset());
-//        String line = null;
-//        reader.readLine();
-//        while((line = reader.readLine()) != null){
-//            //tipo;numero;descricao;data;peso;emailCliente;codigoLocalizacaoOrigem;codigoLocalizacaoDestino;validadeOuMaterial
-//            String[] temp = line.split(";");
-//            String tipo = temp[0];
-//            String numero = temp[1];
-//            String descricao = temp[2];
-//            String data = temp[3];
-//            String peso = temp[4];
-//            String emailCliente = temp[5];
-//            String codigoLocalizacaoOrigem = temp[6];
-//            String codigoLocalizacaoDestino = temp[7];
-//            String validadeOuMaterial = temp[8];
-//
-//            try{
-//                if(validadeOuMaterial.contains("/")){
-//                    addEntregaPerecivel(Integer.parseInt(numero), descricao, Double.parseDouble(peso), emailCliente, );
-//                }
-//                else{
-//                    addEntregaNaoPerecivel();
-//                }
-//                System.out.println(getEntrega(email));
-//            } catch (DuplicateID e){
-//                System.out.println("[ERRO] E-mail ja adicionado em colecao de dados para clientes.");
-//            }
-//        }
-//    }
+    public void readDeliveryData(String nomeArquivo) throws IOException, ParseException{
+        Path path = Paths.get(nomeArquivo);
+        BufferedReader reader = Files.newBufferedReader(path, Charset.defaultCharset());
+        String line = null;
+        reader.readLine();
+        while((line = reader.readLine()) != null){
+            String[] temp = line.split(";");
+            String tipo = temp[0];
+            String numero = temp[1];
+            String descricao = temp[2];
+            String data = temp[3];
+            String peso = temp[4];
+            String emailCliente = temp[5];
+            String codigoLocalizacaoOrigem = temp[6];
+            String codigoLocalizacaoDestino = temp[7];
+            String validadeOuMaterial = temp[8];
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+            String dataHojeString = sdf.format(new Date());
+            Date dataHoje = sdf.parse(dataHojeString);
+            try{
+                if(validadeOuMaterial.contains("/")){
+                    if(checkEntregaID(Integer.parseInt(numero))){
+                        entregasList.add(new EntregaPerecivel(Integer.parseInt(numero), descricao, dataHoje,
+                                Double.parseDouble(peso), emailCliente, getLocalizacaoByID(Integer.parseInt(codigoLocalizacaoOrigem)),
+                                getLocalizacaoByID(Integer.parseInt(codigoLocalizacaoDestino)), sdf.parse(validadeOuMaterial)));
+                    } else{
+                        throw new DuplicateID("[ERRO] ID ja adicionado em colecao de dados para entregas.");
+                    }
+                }
+                else{
+                    if(checkEntregaID(Integer.parseInt(numero))){
+                        entregasList.add(new EntregaNaoPerecivel(Integer.parseInt(numero), descricao, dataHoje,
+                                Double.parseDouble(peso), emailCliente, getLocalizacaoByID(Integer.parseInt(codigoLocalizacaoOrigem)),
+                                getLocalizacaoByID(Integer.parseInt(codigoLocalizacaoDestino)), validadeOuMaterial));
+                    } else{
+                        throw new DuplicateID("[ERRO] ID ja adicionado em colecao de dados para entregas.");
+                    }
+                }
+                System.out.println(getEntregaByID(Integer.parseInt(numero)));
+            } catch (DuplicateID e){
+                System.out.println("[ERRO] E-mail ja adicionado em colecao de dados para clientes.");
+            }
+        }
+    }
 
     public void readLocalizationsData(String nomeArquivo) throws IOException {
         Path path = Paths.get(nomeArquivo);

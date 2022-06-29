@@ -2,6 +2,7 @@ package Controller;
 
 import Exceptions.DuplicateID;
 import Model.DataRegistry;
+import Model.Entrega;
 import Model.Localizacao;
 
 import java.io.IOException;
@@ -100,6 +101,12 @@ public class AdminController {
         System.out.print("Insira o peso da entrega (em kg): ");
         double pesoEntrega = Double.parseDouble(input.nextLine());
 
+        System.out.println("Insira a situação da entrega: ");
+        System.out.println("1 - Cadastrada");
+        System.out.println("2 - Entregue");
+        System.out.println("3 - Cancelada");
+        int situacaoEntrega = Integer.parseInt(input.nextLine());
+
         String tipoEntrega;
         do{
             System.out.println("Insira o tipo de entrega: ");
@@ -129,8 +136,8 @@ public class AdminController {
             Date data = sdf.parse(dateString);
 
             try{
-                database.addEntregaPerecivel(entregaID, descricao, pesoEntrega,
-                        email, droneID, data);
+                    database.addEntregaPerecivel(entregaID, descricao, pesoEntrega,
+                            email, droneID, data);
                 System.out.println(" --- Entrega perecivel cadastrada ---");
             } catch (DuplicateID e) {
                 System.out.println(e.getMessage());
@@ -157,20 +164,20 @@ public class AdminController {
         database.queryAllEntregas();
     }
 
-    public void simuladoDados() throws IOException {
+    public void simulaDados() throws IOException, ParseException {
         System.out.println("Digite o nome do arquivo (com extensão): ");
         System.out.println("Exemplo: \"TESTE-clientes.dat\"");
         String nomeArquivo = input.nextLine();
-        if(nomeArquivo.contains("-clientes.dat")){
+        if(nomeArquivo.contains("cliente")){
             database.readClientsData(nomeArquivo);
         }
-        else if(nomeArquivo.contains("-drones.dat")){
+        else if(nomeArquivo.contains("drone")){
             database.readDroneData(nomeArquivo);
         }
-//        else if(nomeArquivo.contains("-entregas.dat")){
-//            database.readDeliveryData(nomeArquivo);
-//        }
-        else if(nomeArquivo.contains("-localizacoes.dat")){
+        else if(nomeArquivo.contains("entrega")){
+            database.readDeliveryData(nomeArquivo);
+        }
+        else if(nomeArquivo.contains("localiza")){
             database.readLocalizationsData(nomeArquivo);
         }
 
