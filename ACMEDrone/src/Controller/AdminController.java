@@ -150,5 +150,9 @@ public class AdminController {
             }
         }
     }
+
+    public void getTodasEntregas(){
+        database.queryAllEntregas();
+    }
     
 }

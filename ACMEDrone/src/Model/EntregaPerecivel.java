@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class EntregaPerecivel extends Entrega{
     private Date perecivelAte;
+    private double preco = calculaValor();
 
 
     public EntregaPerecivel(int id, String descricao, Date data,
@@ -14,8 +15,6 @@ public class EntregaPerecivel extends Entrega{
 
     @Override
     public double calculaValor() {
-        Localizacao locOrigem = this.origem;
-        Localizacao locDestino = this.destino;
-        return 0.0;//(this.peso*20 + 30*locDestino.getDistance(locOrigem))*1.1;
+        return (this.peso*20 + 30*this.origem.getDistance(this.destino))*1.1;
     }
 }

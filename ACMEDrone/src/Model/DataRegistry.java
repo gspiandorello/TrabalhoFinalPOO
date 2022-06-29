@@ -148,4 +148,14 @@ public class DataRegistry {
             throw new DuplicateID("[ERRO] ID ja adicionado em colecao de dados para entregas.");
         }
     }
+
+    public void queryAllEntregas(){
+        for(Cliente c : clientesList){
+            for(Entrega entrega : this.entregasList){
+                if(entrega.getEmail().equals(c.getEmail())){
+                    System.out.println(c + "\t" + entrega.getDrone() + "\t"+ entrega.calculaValor());
+                }
+            }
+        }
+    }
 }

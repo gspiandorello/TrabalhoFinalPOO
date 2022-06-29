@@ -33,6 +33,10 @@ public abstract class Entrega {
 		return 0;
 	}
 
+	public String getEmail(){ return this.cliente.getEmail(); }
+
+	public Drone getDrone(){ return this.drone; }
+
 	public Entrega(int numero, String descricao, Date data,
 				   double peso, int situacao, Localizacao origem, Localizacao destino){
 		this.numero = numero;

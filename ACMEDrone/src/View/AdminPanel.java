@@ -49,10 +49,16 @@ public class AdminPanel {
                     break;
                 case 4:
                     // Cadastrar nova entrega
-                    adminController.criaEntrega();
+                    try{
+                        adminController.criaEntrega();
+                    } catch (Exception e){
+                        System.out.println("Testa isso");
+                    }
                     break;
                 case 5:
                     // Consultar todas entregas
+                    adminController.getTodasEntregas();
+                    break;
                 case 6:
                     // Carregar a partir de .dat e mostrar na tela
             }
