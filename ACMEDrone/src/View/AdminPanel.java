@@ -1,17 +1,24 @@
 package View;
 
+import Controller.AdminController;
+import Exceptions.DuplicateID;
+import Helper.Parser;
+import Model.DataRegistry;
+
+import javax.xml.crypto.Data;
 import java.util.Scanner;
 
 public class AdminPanel {
 
-    private Scanner input = new Scanner(System.in);
-    private int menuOption;
-
     public AdminPanel(){
+        AdminController adminController = new AdminController();
+        int menuOption;
+
+
         do{
             System.out.println(" ------------ PAINEL DE ADMINISTRADOR ------------ ");
 
-            System.out.println("Encerrar o programa..............................0");
+            System.out.println("Salvar e encerrar................................0");
             System.out.println("Cadastrar nova localizacao.......................1");
             System.out.println("Cadastrar novo drone.............................2");
             System.out.println("Cadastrar novo cliente...........................3");
@@ -22,13 +29,16 @@ public class AdminPanel {
             System.out.print("Insira uma opcao do menu: ");
 
             // InputMismatch exception
+            Scanner input = new Scanner(System.in);
             menuOption = input.nextInt();
 
             switch (menuOption){
                 case 0:
                     // iniciar o salvamento se foi realizado algo
                 case 1:
-                    // cadastrar localizacao
+                    adminController.criaLocalizacao();
+                    adminController.criaLocalizacao();
+                    adminController.criaLocalizacao();
                 case 2:
                     // cadastrar novo drone
                 case 3:
@@ -40,8 +50,7 @@ public class AdminPanel {
                 case 6:
                     // carregar a partir de .dat e mostrar na tela
             }
-
-        }while(menuOption<1 || menuOption > 5);
+        }while(menuOption <1 || menuOption > 5);
 
     }
 }
