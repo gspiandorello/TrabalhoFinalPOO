@@ -109,9 +109,9 @@ public class DataRegistry {
         for (Entrega delivery:
              this.entregasList) {
             if(delivery.getNumero() == deliveryID)
-                return true;
+                return false;
         }
-        return false;
+        return true;
     }
 
     public void addEntregaPerecivel(int entregaID, String descricao, double pesoEntrega,
