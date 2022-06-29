@@ -1,11 +1,15 @@
 package Model;
 
 import Exceptions.DuplicateID;
+import Exceptions.NoDataFile;
+import Helper.Parser;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+import static Helper.Parser.*;
 
 public class DataRegistry {
     private ArrayList<Cliente> clientesList = new ArrayList<>();
@@ -156,6 +160,39 @@ public class DataRegistry {
                     System.out.println(c + "\t" + entrega.getDrone() + "\t"+ entrega.calculaValor());
                 }
             }
+        }
+    }
+
+    public void loadFromFile(String filename) throws NoDataFile {
+        if(filename.contains("clientes")){
+            // READ CLIENTES
+            try{
+                ArrayList<Cliente> clientsRead = readClientsData(filename);
+                this.clientesList.addAll(clientsRead);
+            } catch (Exception err){
+                System.out.println("ABC");
+            }
+
+        } else if (filename.contains("drones")) {
+            // READ DRONES
+            try{
+                ArrayList<Drone> dronesRead = readDroneData(filename);
+                this.dronesList.addAll(dronesRead);
+            } catch (Exception err){
+                System.out.println("ABC");
+            }
+        } else if (filename.contains("entregas")) {
+            // READ ENTREGAS
+            try{
+                ArrayList<Entrega> entregasRead = readEntregasData(filename);
+                this.entregasList.addAll(entregasRead);
+            } catch (Exception err){
+                System.out.println("ABC");
+            }
+        } else if (filename.contains("localizacoes")) {
+            // READ LOCALIZACOES
+        } else {
+            throw new NoDataFile("Sem dados do sistema.");
         }
     }
 }

@@ -52,7 +52,7 @@ public class AdminPanel {
                     try{
                         adminController.criaEntrega();
                     } catch (Exception e){
-                        System.out.println("Testa isso");
+                        System.out.println("Cadastro vazio, tente novamente");
                     }
                     break;
                 case 5:
