@@ -2,6 +2,7 @@ package Controller;
 
 import Exceptions.DuplicateID;
 import Model.DataRegistry;
+import Model.Localizacao;
 
 import java.util.Scanner;
 
@@ -31,6 +32,29 @@ public class AdminController {
 
         try{
             database.addLocalizacao(loc, endereco, lat, lon);
+        } catch (DuplicateID e) {
+            System.err.println(e.getMessage());
+            System.out.println("[INFO] Tente novamente!");
+            criaLocalizacao();
+        }
+    }
+
+    public void criaDrone(){
+        System.out.println("--- Cadastro de drone ---");
+        System.out.print("Insira o identificador unico: ");
+        int id = Integer.parseInt(input.nextLine());
+
+        System.out.print("Insira a carga maxima do drone, em kg: ");
+        double cargaMaxima = Double.parseDouble(input.nextLine());
+
+        System.out.print("Insira a autonomia do drone, em km: ");
+        double autonomiaKm = Double.parseDouble(input.nextLine());
+
+        System.out.print("Insira a base do drone: ");
+        int base = Integer.parseInt(input.nextLine());
+
+        try{
+            database.addDrone(id, cargaMaxima, autonomiaKm, database.getLocalizacaoByID(id));
         } catch (DuplicateID e) {
             System.err.println(e.getMessage());
             System.out.println("[INFO] Tente novamente!");

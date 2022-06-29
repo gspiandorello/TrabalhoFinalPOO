@@ -36,11 +36,13 @@ public class AdminPanel {
                 case 0:
                     // iniciar o salvamento se foi realizado algo
                 case 1:
+                    // Cadastra nova localização no banco de dados
                     adminController.criaLocalizacao();
-                    adminController.criaLocalizacao();
-                    adminController.criaLocalizacao();
+                    break;
                 case 2:
                     // cadastrar novo drone
+                    adminController.criaDrone();
+                    break;
                 case 3:
                     // cadastrar novo cliente
                 case 4:

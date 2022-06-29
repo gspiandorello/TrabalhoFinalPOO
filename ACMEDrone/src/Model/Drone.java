@@ -10,19 +10,13 @@ public class Drone {
 
 	private double autonomiaKm;
 
-	private int base = 0;
+	private Localizacao base;
 
-	public Drone(int identificador, double cargaMaxima, double autonomiaKm, Integer base) {
+	public Drone(int identificador, double cargaMaxima, double autonomiaKm, Localizacao base) {
 		this.identificador = identificador;
 		this.cargaMaxima = cargaMaxima;
 		this.autonomiaKm = autonomiaKm;
 		this.base = base;
-	}
-
-	public Drone(int identificador, double cargaMaxima, double autonomiaKm) {
-		this.identificador = identificador;
-		this.cargaMaxima = cargaMaxima;
-		this.autonomiaKm = autonomiaKm;
 	}
 
 	public int getIdentificador() {
@@ -49,11 +43,11 @@ public class Drone {
 		this.autonomiaKm = autonomiaKm;
 	}
 
-	public Integer getBase() {
+	public Localizacao getBase() {
 		return base;
 	}
 
-	public void setBase(Integer base) {
+	public void setBase(Localizacao base) {
 		this.base = base;
 	}
 
@@ -62,6 +56,6 @@ public class Drone {
 		double maxCarga = Double.parseDouble(values.get(1));
 		double autonomia  = Double.parseDouble(values.get(2));
 		int baseEndereco = Integer.parseInt(values.get(3));
-		return new Drone(id, maxCarga, autonomia, baseEndereco);
+		return new Drone(id, maxCarga, autonomia, null);
 	}
 }
