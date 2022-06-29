@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Vector;
 
 public class DataRegistry {
-    private ArrayList<Cliente> clientesList = new ArrayList<>();
+    private static ArrayList<Cliente> clientesList = new ArrayList<>();
     private ArrayList<Drone> dronesList = new ArrayList<>();
     private ArrayList<Entrega> entregasList = new ArrayList<>();
     private ArrayList<Localizacao> localizacaosList = new ArrayList<>();
@@ -81,6 +81,14 @@ public class DataRegistry {
         return true;
     }
 
+    public static boolean verificaCredenciaisCliente(String email, String senha){
+        for(Cliente c : clientesList){
+            if(email.equals(c.getEmail()) && senha.equals(c.getSenha()))
+                return true;
+        }
+        return false;
+    }
+
 
     public void printAllClients() {
         for(Cliente c : clientesList){
@@ -125,14 +133,21 @@ public class DataRegistry {
         }
         return null;
     }
+    public Drone getDroneByID(int ID){
+        for (Drone d:
+             this.dronesList) {
+            if(d.getIdentificador()==ID) return d;
+        }
+        return null;
+    }
 
     private boolean checkEntregaID(int deliveryID){
         for (Entrega delivery:
              this.entregasList) {
             if(delivery.getNumero() == deliveryID)
-                return true;
+                return false;
         }
-        return false;
+        return true;
     }
 
     public void addEntregaPerecivel(int entregaID, String descricao, double pesoEntrega,
@@ -165,6 +180,7 @@ public class DataRegistry {
         if(checkEntregaID(entregaID)){
             entregasList.add(new EntregaNaoPerecivel(entregaID, descricao, dataHoje,
                     pesoEntrega, email, origem, destino, material));
+            System.out.println(getEntregaByID(entregaID));
         } else{
             throw new DuplicateID("[ERRO] ID ja adicionado em colecao de dados para entregas.");
         }
@@ -181,7 +197,7 @@ public class DataRegistry {
     }
 
     public void readClientsData(String nomeArquivo) throws IOException {
-        Path path = Paths.get(nomeArquivo);
+        Path path = Paths.get("data/"+nomeArquivo);
         BufferedReader reader = Files.newBufferedReader(path, Charset.defaultCharset());
         String line = null;
         reader.readLine();
@@ -201,7 +217,7 @@ public class DataRegistry {
     }
 
     public void readDroneData(String nomeArquivo) throws IOException {
-        Path path = Paths.get(nomeArquivo);
+        Path path = Paths.get("data/"+nomeArquivo);
         BufferedReader reader = Files.newBufferedReader(path, Charset.defaultCharset());
         String line = null;
         reader.readLine();
@@ -214,7 +230,7 @@ public class DataRegistry {
             try{
                 addDrone(Integer.parseInt(identificador), Double.parseDouble(cargaMaxima), Double.parseDouble(autonomia),
                         getLocalizacaoByID(Integer.parseInt(codigoLocalizacao)));
-                System.out.println(getDroneLocByID(Integer.parseInt(identificador)));
+                System.out.println(getDroneByID(Integer.parseInt(identificador)));
             } catch (DuplicateID e){
                 System.out.println("[ERRO] ID ja adicionado em colecao de dados para drones.");
             }
@@ -222,7 +238,7 @@ public class DataRegistry {
     }
 
     public void readDeliveryData(String nomeArquivo) throws IOException, ParseException{
-        Path path = Paths.get(nomeArquivo);
+        Path path = Paths.get("data/"+nomeArquivo);
         BufferedReader reader = Files.newBufferedReader(path, Charset.defaultCharset());
         String line = null;
         reader.readLine();
@@ -267,7 +283,7 @@ public class DataRegistry {
     }
 
     public void readLocalizationsData(String nomeArquivo) throws IOException {
-        Path path = Paths.get(nomeArquivo);
+        Path path = Paths.get("data/"+nomeArquivo);
         BufferedReader reader = Files.newBufferedReader(path, Charset.defaultCharset());
         String line = null;
         reader.readLine();

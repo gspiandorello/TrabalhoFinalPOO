@@ -55,14 +55,6 @@ public class Drone {
 		return false;
 	}
 
-	public static Drone constructFromStrings(List<String> values) {
-		int id = Integer.parseInt(values.get(0));
-		double maxCarga = Double.parseDouble(values.get(1));
-		double autonomia  = Double.parseDouble(values.get(2));
-		int baseEndereco = Integer.parseInt(values.get(3));
-		return new Drone(id, maxCarga, autonomia, null);
-	}
-
 	@Override
 	public String toString() {
 		return "Drone{" +

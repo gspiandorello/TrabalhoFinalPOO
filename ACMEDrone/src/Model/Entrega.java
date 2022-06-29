@@ -86,5 +86,18 @@ public abstract class Entrega {
 
 		return null;
 	}
-
+	@Override
+	public String toString() {
+		return "Entrega{" +
+				"numero=" + numero +
+				", descricao='" + descricao + '\'' +
+				", data=" + data +
+				", peso=" + peso +
+				", situacao=" + situacao +
+				", origem=" + origem +
+				", destino=" + destino +
+				", cliente=" + cliente +
+				", drone=" + drone +
+				'}';
+	}
 }

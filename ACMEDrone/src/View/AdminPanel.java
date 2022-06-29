@@ -12,11 +12,11 @@ import java.util.Scanner;
 
 public class AdminPanel {
 
-    public AdminPanel(){
+    public void AdminPanel(){
         DataRegistry database = new DataRegistry();
         AdminController adminController = new AdminController();
+        App app = new App();
         String menuOption;
-
 
         do{
             System.out.println(" ------------ PAINEL DE ADMINISTRADOR ------------ ");
@@ -28,7 +28,7 @@ public class AdminPanel {
             System.out.println("Cadastrar nova entrega...........................4");
             System.out.println("Consultar todas entregas.........................5");
             System.out.println("Simular carga de dados...........................6");
-            System.out.println("Encerrar o programa..............................7");
+            System.out.println("Voltar ao MENU INICIAL..............................7");
 
             System.out.print("Insira uma opcao do menu: ");
 
@@ -55,7 +55,7 @@ public class AdminPanel {
                     try{
                         adminController.criaEntrega();
                     } catch (Exception e){
-                        System.out.println("Testa isso");
+                        System.out.println("Testa isso:"+e.getMessage());
                     }
                     break;
                 case "5":
@@ -63,17 +63,17 @@ public class AdminPanel {
                     adminController.getTodasEntregas();
                     break;
                 case "6":
-                    System.out.println("Digite o nome do arquivo com extensao: ");
-                    String nomeArquivo = input.nextLine();
+//                    System.out.println("Digite o nome do arquivo com extensao: ");
+//                    String nomeArquivo = input.nextLine();
                     try{
-                        database.readDroneData(nomeArquivo);
-                    } catch (IOException e){
+                      adminController.simulaDados();
+                    } catch (IOException | ParseException e){
                         System.out.println("Ocorreu um erro ao ler o arquivo.");
                     }
                     break;
                     // Carregar a partir de .dat e mostrar na tela
                 case "7":
-                    System.out.println("Programa encerrado.");
+                    app.menuInicial();
                     break;
                 default:
                     System.out.println();
