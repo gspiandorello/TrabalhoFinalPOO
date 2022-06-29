@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class EntregaNaoPerecivel extends Entrega{
     private String material;
-    private double preco = calculaValor();
+    private double preco = 0;
 
 
     public EntregaNaoPerecivel(int id, String descricao, Date data,
@@ -12,9 +12,22 @@ public class EntregaNaoPerecivel extends Entrega{
         super(id, descricao, data, peso, 0, origem, destino);
         this.material = material;
     }
+    public EntregaNaoPerecivel(int id, String descricao, Date data,
+                               double peso, Cliente cliente, Localizacao origem, Localizacao destino, String material, Drone drone) {
+        super(id, descricao, data, peso, 0, origem, destino);
+        this.material = material;
+    }
+
+
 
     @Override
     public double calculaValor() {
-        return (this.peso*20 + 30*this.origem.getDistance(this.destino));
+
+        this.preco = this.peso*20 + 30*this.origem.getDistance(this.destino);
+
+        return this.preco;
+
     }
+
+
 }

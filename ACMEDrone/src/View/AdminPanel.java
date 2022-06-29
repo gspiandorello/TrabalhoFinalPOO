@@ -55,7 +55,7 @@ public class AdminPanel {
                     try{
                         adminController.criaEntrega();
                     } catch (Exception e){
-                        System.out.println("Testa isso");
+                        System.out.println("Testa isso:"+e.getMessage());
                     }
                     break;
                 case "5":
@@ -63,11 +63,11 @@ public class AdminPanel {
                     adminController.getTodasEntregas();
                     break;
                 case "6":
-                    System.out.println("Digite o nome do arquivo com extensao: ");
-                    String nomeArquivo = input.nextLine();
+//                    System.out.println("Digite o nome do arquivo com extensao: ");
+//                    String nomeArquivo = input.nextLine();
                     try{
-                        database.readDroneData(nomeArquivo);
-                    } catch (IOException e){
+                      adminController.simulaDados();
+                    } catch (IOException | ParseException e){
                         System.out.println("Ocorreu um erro ao ler o arquivo.");
                     }
                     break;
