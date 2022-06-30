@@ -28,7 +28,7 @@ public class AdminPanel {
             System.out.println("Cadastrar nova entrega...........................4");
             System.out.println("Consultar todas entregas.........................5");
             System.out.println("Simular carga de dados...........................6");
-            System.out.println("Voltar ao MENU INICIAL..............................7");
+            System.out.println("Voltar ao MENU INICIAL...........................7");
 
             System.out.print("Insira uma opcao do menu: ");
 

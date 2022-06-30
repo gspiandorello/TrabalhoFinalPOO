@@ -135,9 +135,14 @@ public class AdminController {
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             Date data = sdf.parse(dateString);
 
+
+            String dataHojeString = sdf.format(new Date());
+            Date dataHoje = sdf.parse(dataHojeString);
+
             try{
-                    database.addEntregaPerecivel(entregaID, descricao, pesoEntrega,
-                            email, droneID, data);
+                    database.addEntregaPerecivel(entregaID, descricao, dataHoje, pesoEntrega,
+                            email, database.getLocalizacaoByID(droneID),
+                            database.getLocByEmail(email), data, droneID);
                 System.out.println(" --- Entrega perecivel cadastrada ---");
             } catch (DuplicateID e) {
                 System.out.println(e.getMessage());
@@ -149,8 +154,14 @@ public class AdminController {
             String material = input.nextLine();
 
             try{
-                database.addEntregaNaoPerecivel(entregaID, descricao, pesoEntrega,
-                        email, droneID, material);
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+                String dataHojeString = sdf.format(new Date());
+                Date dataHoje = sdf.parse(dataHojeString);
+
+                database.addEntregaNaoPerecivel(entregaID, descricao, dataHoje, pesoEntrega,
+                        email, database.getLocalizacaoByID(droneID),
+                        database.getLocByEmail(email), material, droneID);
                 System.out.println(" --- Entrega nao perecivel cadastrada ---");
             } catch (DuplicateID e) {
                 System.out.println(e.getMessage());
@@ -165,7 +176,7 @@ public class AdminController {
     }
 
     public void simulaDados() throws IOException, ParseException {
-        System.out.println("Digite o nome do arquivo (com extensão): ");
+        System.out.println("Digite o nome do arquivo (com extensao): ");
         System.out.println("Exemplo: \"TESTE-clientes.dat\"");
         String nomeArquivo = input.nextLine();
         if(nomeArquivo.contains("cliente")){
