@@ -114,15 +114,17 @@ public class AdminController {
             tipoEntrega = input.nextLine();
         }while(!tipoEntrega.equals("1") && !tipoEntrega.equals("2"));
 
-        System.out.println(" --- Lista de Clientes disponíveis ---");
+        System.out.println(" --- Lista de Clientes disponiveis ---");
         database.printAllClients();
 
         System.out.print("Insira o e-mail do cliente desejado: ");
         String email = input.nextLine();
 
-        System.out.println(" --- Lista de Drones disponíveis ---");
-//        database.printAllAvailableDrones(email, pesoEntrega);
-        database.printAllDrones();
+        System.out.println(" --- Lista de Drones disponiveis ---");
+        if (!database.printAllAvailableDrones(email, pesoEntrega)){
+            System.out.println("[ERRO] Nenhum drone disponivel - entrega cancelada");
+            situacaoEntrega = 3;
+        };
 
         System.out.print("Insira o ID do drone desejado: ");
         int droneID = Integer.parseInt(input.nextLine());
@@ -177,7 +179,10 @@ public class AdminController {
 
     public void simulaDados() throws IOException, ParseException {
         System.out.println("Digite o nome do arquivo (com extensao): ");
+        System.out.println("Exemplo: \"TESTE-localizacoes.dat\"");
+        System.out.println("Exemplo: \"TESTE-drones.dat\"");
         System.out.println("Exemplo: \"TESTE-clientes.dat\"");
+        System.out.println("Exemplo: \"TESTE-entregas.dat\"");
         String nomeArquivo = input.nextLine();
         if(nomeArquivo.contains("cliente")){
             database.readClientsData(nomeArquivo);

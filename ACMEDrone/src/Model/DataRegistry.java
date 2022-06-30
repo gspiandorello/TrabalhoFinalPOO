@@ -18,7 +18,7 @@ import java.util.Vector;
 public class DataRegistry {
     private static ArrayList<Cliente> clientesList = new ArrayList<>();
     private ArrayList<Drone> dronesList = new ArrayList<>();
-    private ArrayList<Entrega> entregasList = new ArrayList<>();
+    private static ArrayList<Entrega> entregasList = new ArrayList<>();
     private ArrayList<Localizacao> localizacaosList = new ArrayList<>();
 
     public void addLocalizacao(int loc, String endereco, double lat, double lon) throws DuplicateID {
@@ -122,22 +122,19 @@ public class DataRegistry {
      * @param email
      * @param peso
      */
-    public void printAllAvailableDrones(String email, double peso) {
+    public boolean printAllAvailableDrones(String email, double peso) {
         Localizacao locDestino = getClienteByEmail(email).getLocalizacao();
-
+        boolean flag=false;
         for (Drone drone : dronesList) {
             Localizacao locBase = drone.getBase();
             double deltaDistance = locBase.getDistance(locDestino);
 
-            if (drone.getAutonomiaKm() >= deltaDistance)
+            if (drone.getAutonomiaKm() >= deltaDistance && drone.getCargaMaxima() >= peso){
                 System.out.println(drone);
+                flag=true;
+            }
         }
-    }
-
-    public void printAllDrones(){
-        for(Drone d : dronesList){
-            System.out.println(d);
-        }
+        return flag;
     }
 
     public Localizacao getDroneLocByID(int ID){
@@ -200,11 +197,24 @@ public class DataRegistry {
     public void queryAllEntregas(){
         for(Cliente c : clientesList){
             for(Entrega entrega : entregasList){
-                if(entrega.getEmail().equals(c.getEmail())){
+                if(entrega.cliente.getEmail().equals(c.getEmail())){
                     System.out.println(c + "\t" + entrega.getDrone() + "\t"+ entrega.calculaValor());
                 }
             }
         }
+    }
+
+    public void procuraEntrega(String email) {
+        for (Entrega entrega : entregasList) {
+            if (entrega.cliente.getEmail().equals(email)) {
+                System.out.println(entrega.cliente + "\t" + entrega.getDrone() + "\t" + entrega.calculaValor());
+            }
+        }
+    }
+
+    public void procuraData(String dataString, String email) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/yyyy");
+        Date data = sdf.parse(dataString);
     }
 
     public void readClientsData(String nomeArquivo) throws IOException {

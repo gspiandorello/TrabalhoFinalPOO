@@ -47,7 +47,7 @@ public class App {
             if (AdminController.verificaCredenciaisAdmin(emailInput, senhaInput))
                 admin.AdminPanel();
             else if (database.verificaCredenciaisCliente(emailInput, senhaInput))
-                user.UserPanel();
+                user.UserPanel(emailInput);
             else
                 System.out.println("Usuario não encontrado");
             Login();

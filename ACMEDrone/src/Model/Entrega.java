@@ -19,7 +19,7 @@ public abstract class Entrega {
 
 	double peso;
 
-	private int situacao; //cadastrada, entregada ou cancelada
+	private int situacao=1; //cadastrada, entregada ou cancelada
 
 	Localizacao origem;
 
@@ -33,7 +33,7 @@ public abstract class Entrega {
 		return 0;
 	}
 
-	public String getEmail(){ return this.cliente.getEmail(); }
+	public String getEmail(){ return cliente.getEmail(); }
 
 	public Drone getDrone(){ return this.drone; }
 

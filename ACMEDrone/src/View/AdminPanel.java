@@ -55,7 +55,7 @@ public class AdminPanel {
                     try{
                         adminController.criaEntrega();
                     } catch (Exception e){
-                        System.out.println("Testa isso:"+e.getMessage());
+                        System.out.println(e.getMessage());
                     }
                     break;
                 case "5":
@@ -63,15 +63,14 @@ public class AdminPanel {
                     adminController.getTodasEntregas();
                     break;
                 case "6":
-//                    System.out.println("Digite o nome do arquivo com extensao: ");
-//                    String nomeArquivo = input.nextLine();
                     try{
-                      adminController.simulaDados();
+                        // Carregar a partir de .dat e mostrar na tela
+                        adminController.simulaDados();
                     } catch (IOException | ParseException e){
-                        System.out.println("Ocorreu um erro ao ler o arquivo.");
+                        System.out.println("Ocorreu um erro ao ler o arquivo: " + e.getMessage());
                     }
                     break;
-                    // Carregar a partir de .dat e mostrar na tela
+
                 case "7":
                     app.menuInicial();
                     break;
