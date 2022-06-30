@@ -81,6 +81,20 @@ public class DataRegistry {
         return true;
     }
 
+    public Cliente getClientByEmail(String email){
+        for(Cliente c : clientesList){
+            if(c.getEmail().equals(email)) return c;
+        }
+        return null;
+    }
+
+    public Localizacao getLocByEmail(String email){
+        for(Cliente c : clientesList){
+            if(c.getEmail().equals(email)) return c.getLocalizacao();
+        }
+        return null;
+    }
+
     public static boolean verificaCredenciaisCliente(String email, String senha){
         for(Cliente c : clientesList){
             if(email.equals(c.getEmail()) && senha.equals(c.getSenha()))
@@ -150,36 +164,33 @@ public class DataRegistry {
         return true;
     }
 
-    public void addEntregaPerecivel(int entregaID, String descricao, double pesoEntrega,
-                                    String email, int droneID, Date data) throws ParseException, DuplicateID {
+    public void addEntregaPerecivel(int entregaID, String descricao, Date date, double pesoEntrega,
+                                    String emailCliente, Localizacao origem, Localizacao destino,
+                                    Date data, int droneID) throws ParseException, DuplicateID {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         String dataHojeString = sdf.format(new Date());
         Date dataHoje = sdf.parse(dataHojeString);
 
-        Localizacao origem = getClienteByEmail(email).getLocalizacao();
-        Localizacao destino = getDroneLocByID(droneID);
-
         if(checkEntregaID(entregaID)){
-            entregasList.add(new EntregaPerecivel(entregaID, descricao, dataHoje,
-                    pesoEntrega, email, origem, destino, data));
+            entregasList.add(new EntregaPerecivel(entregaID, descricao, date,
+                    pesoEntrega, getClienteByEmail(emailCliente), origem, destino, data, getDroneByID(droneID)));
+            //int id, String descricao, Date data,
+            //                            double peso, Cliente cliente, Localizacao origem, Localizacao destino, Date perecivelAte, Drone drone
         } else{
             throw new DuplicateID("[ERRO] ID ja adicionado em colecao de dados para entregas.");
         }
     }
 
-    public void addEntregaNaoPerecivel(int entregaID, String descricao,
-                                       double pesoEntrega, String email,
-                                       int droneID, String material) throws ParseException, DuplicateID {
+    public void addEntregaNaoPerecivel(int entregaID, String descricao, Date date, double pesoEntrega,
+                                       String email, Localizacao origem, Localizacao destino,
+                                       String material, int idDrone) throws ParseException, DuplicateID {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         String dataHojeString = sdf.format(new Date());
         Date dataHoje = sdf.parse(dataHojeString);
 
-        Localizacao origem = getClienteByEmail(email).getLocalizacao();
-        Localizacao destino = getDroneLocByID(droneID);
-
         if(checkEntregaID(entregaID)){
             entregasList.add(new EntregaNaoPerecivel(entregaID, descricao, dataHoje,
-                    pesoEntrega, email, origem, destino, material));
+                    pesoEntrega, getClienteByEmail(email), origem, destino, material, getDroneByID(idDrone)));
             System.out.println(getEntregaByID(entregaID));
         } else{
             throw new DuplicateID("[ERRO] ID ja adicionado em colecao de dados para entregas.");
@@ -188,7 +199,7 @@ public class DataRegistry {
 
     public void queryAllEntregas(){
         for(Cliente c : clientesList){
-            for(Entrega entrega : this.entregasList){
+            for(Entrega entrega : entregasList){
                 if(entrega.getEmail().equals(c.getEmail())){
                     System.out.println(c + "\t" + entrega.getDrone() + "\t"+ entrega.calculaValor());
                 }
@@ -260,7 +271,7 @@ public class DataRegistry {
                 if(validadeOuMaterial.contains("/")){
                     if(checkEntregaID(Integer.parseInt(numero))){
                         entregasList.add(new EntregaPerecivel(Integer.parseInt(numero), descricao, dataHoje,
-                                Double.parseDouble(peso), emailCliente, getLocalizacaoByID(Integer.parseInt(codigoLocalizacaoOrigem)),
+                                Double.parseDouble(peso), getClienteByEmail(emailCliente), getLocalizacaoByID(Integer.parseInt(codigoLocalizacaoOrigem)),
                                 getLocalizacaoByID(Integer.parseInt(codigoLocalizacaoDestino)), sdf.parse(validadeOuMaterial)));
                     } else{
                         throw new DuplicateID("[ERRO] ID ja adicionado em colecao de dados para entregas.");
@@ -268,9 +279,10 @@ public class DataRegistry {
                 }
                 else{
                     if(checkEntregaID(Integer.parseInt(numero))){
-                        entregasList.add(new EntregaNaoPerecivel(Integer.parseInt(numero), descricao, dataHoje,
-                                Double.parseDouble(peso), emailCliente, getLocalizacaoByID(Integer.parseInt(codigoLocalizacaoOrigem)),
-                                getLocalizacaoByID(Integer.parseInt(codigoLocalizacaoDestino)), validadeOuMaterial));
+                        EntregaNaoPerecivel entrega = new EntregaNaoPerecivel(Integer.parseInt(numero), descricao, dataHoje,
+                                Double.parseDouble(peso), getClienteByEmail(emailCliente), getLocalizacaoByID(Integer.parseInt(codigoLocalizacaoOrigem)),
+                                getLocalizacaoByID(Integer.parseInt(codigoLocalizacaoDestino)), validadeOuMaterial);
+                        entregasList.add(entrega);
                     } else{
                         throw new DuplicateID("[ERRO] ID ja adicionado em colecao de dados para entregas.");
                     }

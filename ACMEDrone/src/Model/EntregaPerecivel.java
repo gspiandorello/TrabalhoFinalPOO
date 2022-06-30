@@ -13,7 +13,17 @@ public class EntregaPerecivel extends Entrega{
         this.perecivelAte = perecivelAte;
     }
 
+    public EntregaPerecivel(int id, String descricao, Date data,
+                            double peso, Cliente cliente, Localizacao origem, Localizacao destino, Date perecivelAte) {
+        super(id, descricao, data, peso, 0, origem, destino, cliente);
+        this.perecivelAte = perecivelAte;
+    }
 
+    public EntregaPerecivel(int id, String descricao, Date data,
+                            double peso, Cliente cliente, Localizacao origem, Localizacao destino, Date perecivelAte, Drone drone) {
+        super(id, descricao, data, peso, 0, origem, destino, cliente, drone);
+        this.perecivelAte = perecivelAte;
+    }
 
     @Override
     public double calculaValor() {
